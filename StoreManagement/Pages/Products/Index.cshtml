@@ -1,0 +1,95 @@
+﻿@page
+@model StoreManagement.Pages.Products.ProductsModel
+
+<script>
+    $(function () {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [75, 300],
+            slide: function (event, ui) {
+                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+            }
+        });
+        $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+            " - $" + $("#slider-range").slider("values", 1));
+    });
+</script>
+
+<div class="pt-2 pb-4">
+    <h2 class="text-primary">Mặt Hàng</h2>
+</div>
+<div class="submit-form pt-2 pb-4">
+    <form method="post">
+        <div class="row">
+            <div class="col">
+                <div class="form-element my-2">
+                    <label for="name">Tên</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="form-element my-2">
+                    <label for="Category">Loại Hàng</label>
+                    <select name="Category">
+                        @foreach (var c in Model.Categories)
+                        {
+                            <option value="@c.ID">@c.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-element my-2">
+                    <label class="form-label" for="Price">Giá</label>
+                    <input type="text" name="minPrice">-
+                    <input type="text" name="maxPrice">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-element my-2">
+                    <label class="form-label" for="ExpiryDate">Hạn Dùng</label>
+                    <input type="text" name="ExpiryDate">
+                </div>
+                <div class="form-element my-2">
+                    <label class="form-label" for="ManufacturingDate">Ngày sản xuất</label>
+                    <input type="date" name="ManufacturingDate">
+                </div>
+                <div class="form-element my-2">
+                    <label class="form-label" for="Manufacturer">Công ty sản xuất</label>
+                    <input type="date" name="Manufacturer">
+                </div>
+            </div>            
+        </div>
+        <div class="form-element">
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+    </form>
+</div>
+<div class="pt-2 pb-4">
+    <table class="table table-bordered table-striped" width="100%">
+        <tr>
+            <th>Mã mặt hàng</th>
+            <th>Tên mặt hàng</th>
+            <th>Loại hàng</th>
+            <th>Giá</th>
+            <th>Hạn dùng</th>
+            <th>Ngày sản xuất</th>
+            <th>Công ty sản xuất</th>
+        </tr>
+
+        @foreach (var p in Model.Products)
+        {
+            <tr>
+                <td>@p.ID</td>
+                <td>@p.Name</td>
+                <td>@p.Category</td>
+                <td>@p.Price</td>
+                <td>@p.ExpiryDate</td>
+                <td>@p.ManufacturingDate</td>
+                <td>@p.Manufacturer</td>
+                <td><button type="button" onclick="Edit(@p.ID)">Edit</button><button type="button" onclick="Delete(@p.ID)">Delete</button></td>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    <a asp-page="AddProduct" class="btn btn-primary">Thêm mặt hàng mới</a>
+</div>

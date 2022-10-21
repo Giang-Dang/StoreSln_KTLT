@@ -7,7 +7,7 @@
         public DateOnly ExpiryDate;
         public DateOnly ManufacturingDate;
         public string Manufacturer;
-        public string Price;
+        public decimal Price;
         public Category Category;
     }
 }

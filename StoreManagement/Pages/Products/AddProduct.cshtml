@@ -1,0 +1,38 @@
+﻿@page
+@model StoreManagement.Pages.Product.AddProductModel
+<div class="submit-form">
+    <form method="post">
+        <div class="form-element">
+            <label for="name">Tên</label>
+            <input type="text" name="name">
+        </div>
+        <div class="form-element">
+            <label for="Category">Loại Hàng</label>
+            <select name="Category">
+                @foreach (var c in Model.Categories)
+                {
+                    <option value="@c.ID">@c.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-element">
+            <label for="Price">Giá</label>
+            <input type="text" name="Price">
+        </div>
+        <div class="form-element">
+            <label for="ExpiryDate">Hạn Dùng</label>
+            <input type="text" name="ExpiryDate">
+        </div>
+        <div class="form-element">
+            <label for="ManufacturingDate">Ngày sản xuất</label>
+            <input type="date" name="ManufacturingDate">
+        </div>
+        <div class="form-element">
+            <label for="Manufacturer">Công ty sản xuất</label>
+            <input type="date" name="Manufacturer">
+        </div>
+        <div class="form-element">
+            <input type="submit" value="Tìm kiếm">
+        </div>
+    </form>
+</div>
