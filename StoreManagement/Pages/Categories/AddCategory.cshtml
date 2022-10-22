@@ -1,4 +1,17 @@
 ﻿@page
 @model StoreManagement.Pages.Category.AddCategoryModel
-@{
-}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3">Thêm loại hàng</h2>
+            <hr/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label mx-3" for="Name" style="width:180px;">Tên loại hàng: </label>
+            <input class="w-50" type="text" name="name">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px;">Thêm</button>
+        <a asp-page="Index" class="btn btn-secondary">Trở về danh sách loại hàng</a>
+    </div>
+</form>

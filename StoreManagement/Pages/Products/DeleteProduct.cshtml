@@ -1,9 +1,9 @@
 ﻿@page
-@model StoreManagement.Pages.Product.EditProductModel
+@model StoreManagement.Pages.Product.DeleteProductModel
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary pl-3">Sửa mặt hàng</h2>
+            <h2 class="text-primary pl-3">Xóa mặt hàng</h2>
             <hr />
         </div>
         <div class="mb-3">
@@ -35,7 +35,7 @@
             <label for="Manufacturer" style="width:180px;">Công ty sản xuất</label>
             <input class="mw-50" style="width:210px;" type="date" name="Manufacturer">
         </div>
-        <button type="submit" class="btn btn-primary" style="width:150px;">Sửa</button>
+        <button type="submit" class="btn btn-danger" style="width:150px;">Xóa mặt hàng</button>
         <a asp-page="Index" class="btn btn-secondary">Trở về danh sách mặt hàng</a>
     </div>
 </form>

@@ -2,7 +2,12 @@
 {
     public struct Category
     {
-        public string ID;
+        public int ID;
         public string Name;
+        public Category(int id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
     }
 }

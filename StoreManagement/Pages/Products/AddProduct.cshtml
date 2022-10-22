@@ -1,38 +1,41 @@
 ﻿@page
 @model StoreManagement.Pages.Product.AddProductModel
-<div class="submit-form">
-    <form method="post">
-        <div class="form-element">
-            <label for="name">Tên</label>
-            <input type="text" name="name">
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3">Thêm mặt hàng</h2>
+            <hr />
         </div>
-        <div class="form-element">
-            <label for="Category">Loại Hàng</label>
-            <select name="Category">
+        <div class="mb-3">
+            <label for="name" style="width:180px;">Tên</label>
+            <input class="mw-50" style="width:210px;" type="text" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="Category" style="width:180px;">Loại Hàng</label>
+            <select class="mw-50" style="width:210px;" name="Category">
                 @foreach (var c in Model.Categories)
                 {
                     <option value="@c.ID">@c.Name</option>
                 }
             </select>
         </div>
-        <div class="form-element">
-            <label for="Price">Giá</label>
-            <input type="text" name="Price">
+        <div class="mb-3">
+            <label for="Price" style="width:180px;">Giá</label>
+            <input class="mw-50" style="width:210px;" type="text" name="Price">
         </div>
-        <div class="form-element">
-            <label for="ExpiryDate">Hạn Dùng</label>
-            <input type="text" name="ExpiryDate">
+        <div class="mb-3">
+            <label for="ExpiryDate"style="width:180px;">Hạn Dùng</label>
+            <input class="mw-50" style="width:210px;" type="text" name="ExpiryDate">
         </div>
-        <div class="form-element">
-            <label for="ManufacturingDate">Ngày sản xuất</label>
-            <input type="date" name="ManufacturingDate">
+        <div class="mb-3">
+            <label for="ManufacturingDate"style="width:180px;">Ngày sản xuất</label>
+            <input class="mw-50" style="width:210px;" type="date" name="ManufacturingDate">
         </div>
-        <div class="form-element">
-            <label for="Manufacturer">Công ty sản xuất</label>
-            <input type="date" name="Manufacturer">
+        <div class="mb-3">
+            <label for="Manufacturer" style="width:180px;">Công ty sản xuất</label>
+            <input class="mw-50" style="width:210px;" type="date" name="Manufacturer">
         </div>
-        <div class="form-element">
-            <input type="submit" value="Tìm kiếm">
-        </div>
-    </form>
-</div>
+        <button type="submit" class="btn btn-primary" style="width:150px;">Thêm</button>
+        <a asp-page="Index" class="btn btn-secondary">Trở về danh sách mặt hàng</a>
+    </div>
+</form>

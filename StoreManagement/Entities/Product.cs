@@ -2,7 +2,7 @@
 {
     public struct Product
     {
-        public string ID;
+        public int ID;
         public string Name;
         public DateOnly ExpiryDate;
         public DateOnly ManufacturingDate;
