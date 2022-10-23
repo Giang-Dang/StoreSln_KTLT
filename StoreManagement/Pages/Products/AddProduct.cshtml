@@ -12,7 +12,7 @@
         </div>
         <div class="mb-3">
             <label for="Category" style="width:180px;">Loại Hàng</label>
-            <select class="mw-50" style="width:210px;" name="Category">
+            <select class="mw-50" style="width:210px;" name="CategoryID">
                 @foreach (var c in Model.Categories)
                 {
                     <option value="@c.ID">@c.Name</option>
@@ -25,15 +25,15 @@
         </div>
         <div class="mb-3">
             <label for="ExpiryDate"style="width:180px;">Hạn Dùng</label>
-            <input class="mw-50" style="width:210px;" type="text" name="ExpiryDate">
+            <input class="mw-50" style="width:210px;" type="date" name="str_ExpiryDate">
         </div>
         <div class="mb-3">
             <label for="ManufacturingDate"style="width:180px;">Ngày sản xuất</label>
-            <input class="mw-50" style="width:210px;" type="date" name="ManufacturingDate">
+            <input class="mw-50" style="width:210px;" type="date" name="str_ManufacturingDate">
         </div>
         <div class="mb-3">
             <label for="Manufacturer" style="width:180px;">Công ty sản xuất</label>
-            <input class="mw-50" style="width:210px;" type="date" name="Manufacturer">
+            <input class="mw-50" style="width:210px;" type="text" name="Manufacturer">
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px;">Thêm</button>
         <a asp-page="Index" class="btn btn-secondary">Trở về danh sách mặt hàng</a>

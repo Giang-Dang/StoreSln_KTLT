@@ -4,10 +4,29 @@
     {
         public int ID;
         public string Name;
-        public DateOnly ExpiryDate;
-        public DateOnly ManufacturingDate;
-        public string Manufacturer;
-        public decimal Price;
         public Category Category;
+        public decimal Price;
+        public DateTime ExpiryDate;
+        public DateTime ManufacturingDate;
+        public string Manufacturer;
+        
+        public Product(
+            int id, 
+            string name,
+            decimal price,
+            Category category,
+            DateTime expiryDate,
+            DateTime manufacturingDate,
+            string manufacturer
+            )
+        {
+            ID = id;
+            Name = name;
+            ExpiryDate = expiryDate;
+            Price = price;
+            ManufacturingDate = manufacturingDate;
+            Manufacturer = manufacturer;
+            Category = category;
+        }
     }
 }

@@ -1,0 +1,1 @@
+[{"ID":1,"Name":"Samsung 40inch","Category":{"ID":1,"Name":"Tivi SamSung"},"Price":11000000.0,"ExpiryDate":"2023-10-12T00:00:00","ManufacturingDate":"2022-10-04T00:00:00","Manufacturer":"Samsung"},{"ID":2,"Name":"LG 40inch","Category":{"ID":3,"Name":"Tivi LG"},"Price":10000000.0,"ExpiryDate":"2022-10-25T00:00:00","ManufacturingDate":"2022-09-27T00:00:00","Manufacturer":"LG"}]

@@ -9,23 +9,36 @@ namespace StoreManagement.DAL
     {
         private static readonly string _dataFilePath = $@"{Global.DATA_DIRECTORY}/Products.json";
 
-        public static void Add(Product product)
+        public static bool Add(Product product)
         {
-            var products = ReadData();
-            int maxID = 0;
-            foreach (var p in products)
+            try
             {
-                maxID = maxID > p.ID ? maxID : p.ID;
+                var products = ReadData();
+                int maxID = 0;
+                if (products.Any())
+                {
+                    maxID = products.Max(p => p.ID);
+                }       
+                product.ID = maxID + 1;
+                products.Add(product);
+                SaveData(products);
             }
-            product.ID = maxID;
-            products.Add(product);
-            SaveData(products);
+            catch (Exception)
+            {
+                throw;
+            }
+            
+            return true;
         }
 
         public static void SaveData(List<Product> products)
         {
-            string jsonData = JsonConvert.SerializeObject(products, Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(_dataFilePath))
+            string jsonData = JsonConvert.SerializeObject(products);
+            if (!Directory.Exists(Global.DATA_DIRECTORY))
+            {
+                Directory.CreateDirectory(Global.DATA_DIRECTORY);
+            }
+            using (StreamWriter sw = new StreamWriter(_dataFilePath, false))
             {
                 sw.WriteLine(jsonData);
             }
@@ -48,10 +61,26 @@ namespace StoreManagement.DAL
             return res;
         }
 
-        public static bool AnyProductInCategory(Category category)
+
+        public static bool Delete(Product product)
         {
             var products = ReadData();
-            return products.Any(p => p.Category.Equals(category));
+            products.Remove(product);
+            SaveData(products);
+            return true;
+        }
+
+        public static bool Edit(Product product)
+        {
+            var products = ReadData();
+            var index = products.FindIndex(c => c.ID == product.ID);
+            if (index == -1)
+            {
+                return false;
+            }
+            products[index] = product;
+            SaveData(products);
+            return true;
         }
     }
 }

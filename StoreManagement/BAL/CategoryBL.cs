@@ -18,12 +18,18 @@ namespace StoreManagement.BAL
 
         public static Category FindByID(int id)
         {
-            return CategoryDA.FindByID(id);
+            var categories = ReadData();
+            return categories.First(c => c.ID == id);
         }
-
-        public static List<Category> FindByName(string name)
+        public static Category FindByName(string name)
         {
-            return CategoryDA.FindByName(name);
+            var categories = ReadData();
+            return categories.First(c => c.Name == name);
+        }
+        public static List<Category> FindByStringInName(string sname)
+        {
+            var categories = ReadData();
+            return categories.Where(c => c.Name.Contains(sname)).ToList();
         }
 
         public static bool Edit(Category category)
@@ -33,7 +39,7 @@ namespace StoreManagement.BAL
 
         public static string Delete(Category category)
         {
-            if(ProductDA.AnyProductInCategory(category))
+            if(ProductBL.AnyProductInCategory(category))
             {
                 return "Xóa thất bại. Do có mặt hàng thuộc loại hàng này.";
             }

@@ -17,7 +17,7 @@ namespace StoreManagement.Pages.Category
 
         public void OnPost()
         {
-            Categories = CategoryBL.FindByName(SearchName);
+            Categories = CategoryBL.FindByStringInName(SearchName);
         }
     }
 }

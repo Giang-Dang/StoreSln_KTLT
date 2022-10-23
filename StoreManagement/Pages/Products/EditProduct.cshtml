@@ -7,12 +7,16 @@
             <hr />
         </div>
         <div class="mb-3">
+            <label for="name" style="width:180px;">Mã mặt hàng</label>
+            <input disabled class="mw-50" style="width:210px;" type="text" name="ID" value="@Model.ID">
+        </div>
+        <div class="mb-3">
             <label for="name" style="width:180px;">Tên</label>
-            <input class="mw-50" style="width:210px;" type="text" name="Name">
+            <input class="mw-50" style="width:210px;" type="text" name="Name" value="@Model.Product.Name">
         </div>
         <div class="mb-3">
             <label for="Category" style="width:180px;">Loại Hàng</label>
-            <select class="mw-50" style="width:210px;" name="Category">
+            <select class="mw-50" style="width:210px;" name="CategoryID" value="@Model.Product.Category.ID">
                 @foreach (var c in Model.Categories)
                 {
                     <option value="@c.ID">@c.Name</option>
@@ -21,20 +25,31 @@
         </div>
         <div class="mb-3">
             <label for="Price" style="width:180px;">Giá</label>
-            <input class="mw-50" style="width:210px;" type="text" name="Price">
-        </div>
-        <div class="mb-3">
-            <label for="ExpiryDate" style="width:180px;">Hạn Dùng</label>
-            <input class="mw-50" style="width:210px;" type="text" name="ExpiryDate">
-        </div>
-        <div class="mb-3">
-            <label for="ManufacturingDate" style="width:180px;">Ngày sản xuất</label>
-            <input class="mw-50" style="width:210px;" type="date" name="ManufacturingDate">
+            <input class="mw-50" style="width:210px;" type="text" name="Price" value="@Model.Product.Price">
         </div>
         <div class="mb-3">
             <label for="Manufacturer" style="width:180px;">Công ty sản xuất</label>
-            <input class="mw-50" style="width:210px;" type="date" name="Manufacturer">
+            <input class="mw-50" style="width:210px;" type="text" name="Manufacturer" value="@Model.Product.Manufacturer">
         </div>
+        <hr/>
+        <div class="mb-3">
+            <label for="oldExpiryDate" style="width:180px;">Hạn sử dụng</label>
+            <input disabled class="mw-50" style="width:210px;" type="text" name="str_oldExpiryDate" value="@Model.Product.ExpiryDate.ToShortDateString()">
+        </div>
+        <div class="mb-3">
+            <label for="ExpiryDate" style="width:180px;">Chọn hạn sử dụng mới: </label>
+            <input class="mw-50" style="width:210px;" type="date" name="str_ExpiryDate" value="@Model.Product.ExpiryDate.ToShortDateString()">
+        </div>
+        <hr />
+        <div class="mb-3">
+            <label for="oldManufacturingDate" style="width:180px;">Ngày sản xuất</label>
+            <input disabled class="mw-50" style="width:210px;" type="text" name="str_oldManufacturingDate" value="@Model.Product.ManufacturingDate.ToShortDateString()">
+        </div>
+        <div class="mb-3">
+            <label for="ManufacturingDate" style="width:180px;">Chọn ngày sản xuất mới</label>
+            <input class="mw-50" style="width:210px;" type="date" name="str_ManufacturingDate" value="@Model.Product.ManufacturingDate.ToShortDateString()">
+        </div>
+        <hr />
         <button type="submit" class="btn btn-primary" style="width:150px;">Sửa</button>
         <a asp-page="Index" class="btn btn-secondary">Trở về danh sách mặt hàng</a>
     </div>

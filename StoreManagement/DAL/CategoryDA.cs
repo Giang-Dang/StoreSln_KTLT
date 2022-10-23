@@ -11,11 +11,12 @@ namespace StoreManagement.DAL
         public static void Add(Category category)
         {
             var categories = ReadData();
-            int maxID = 1;
-            foreach (var c in categories)
+
+            int maxID = 0;
+            if(categories.Any())
             {
-                maxID = maxID > c.ID ? maxID : c.ID;
-            }
+                maxID = categories.Max(p => p.ID);
+            }    
             category.ID = maxID + 1;
             categories.Add(category);
             SaveData(categories);
@@ -53,16 +54,7 @@ namespace StoreManagement.DAL
             return res;
         }
 
-        public static Category FindByID(int id)
-        {
-            var categories = ReadData();
-            return categories.First(c => c.ID == id);
-        }
-        public static List<Category> FindByName(string name)
-        {
-            var categories = ReadData();
-            return categories.Where(c => c.Name.Contains(name)).ToList();
-        }
+        
         
         public static bool Edit(Category category)
         {
@@ -74,6 +66,19 @@ namespace StoreManagement.DAL
             }
             categories[index] = category;
             SaveData(categories);
+
+            var queryProducts = ProductDA.ReadData();
+            for (int i = 0; i < queryProducts.Count; i++)
+            {
+                if (queryProducts[i].Category.ID == category.ID)
+                {
+                    var tempProduct = queryProducts[i];
+                    tempProduct.Category = category;
+                    queryProducts[i] = tempProduct;
+                }    
+            }
+            ProductDA.SaveData(queryProducts);
+
             return true;
         }
 

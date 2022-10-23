@@ -16,10 +16,11 @@
                     </div>
                     <div class="form-element col-sm-3 m-2">
                         <label for="Category" style="width:110px;">Loại Hàng: </label>
-                        <select name="Category" class="mw-50" style="width:150px;">
+                        <select name="str_CategoryID" class="mw-50" style="width:150px;">
+                            <option value="">----------</option>
                             @foreach (var c in Model.Categories)
                             {
-                                <option value="@c.ID">@c.Name</option>
+                                <option value="@c.ID.ToString()">@c.Name</option>
                             }
                         </select>
                     </div>
@@ -31,23 +32,25 @@
                 <div class="row">
                     
                     <div class="form-element col-sm-3 m-2">
-                        <label class="form-label" for="ExpiryDate" style="width:80px;">Hạn Dùng: </label>
-                        <input class="w-50" type="date" name="ExpiryDate" style="width:150px;">
+                        <label class="form-label" for="ExpiryDate" style="width:110px;">Hạn sử dụng: </label>
+                        <input class="w-50" type="date" name="str_MinExpiryDate" style="width:150px;"> - 
+                        <input class="w-50" type="date" name="str_MaxExpiryDate" style="width:150px;">
                     </div>
                     <div class="form-element col-sm-3 m-2">
                         <label class="form-label" for="ManufacturingDate" style="width:110px;">Ngày sản xuất: </label>
-                        <input class="" type="date" name="ManufacturingDate" style="width:150px;">
+                        <input class="" type="date" name="str_MinManufacturingDate" style="width:150px;"> - 
+                        <input class="" type="date" name="str_MaxManufacturingDate" style="width:150px;">
                     </div>
                     <div class="form-element col-sm-4 m-2">
                         <label class="form-label" for="Price" style="width:125px;">Giá: </label>
-                        <input class="w-25" type="text" name="minPrice"> -
-                        <input class="w-25" type="text" name="maxPrice">
+                        <input class="w-25" type="text" name="str_MinPrice"> -
+                        <input class="w-25" type="text" name="str_MaxPrice">
                     </div>
                 </div>            
             </div>
             <div class="row">
                 <div class="col-sm-10 d-flex flex-row-reverse">
-                    <button class="btn btn-primary mx-4" type="submit"><i class="bi bi-search"></i> Tìm kiếm</button>
+                    <button class="btn btn-primary mx-4" type="submit"><i class="bi bi-funnel-fill"></i></i> Tìm kiếm</button>
                 </div>
             </div>
         </form>
@@ -59,7 +62,7 @@
                 <th>Tên mặt hàng</th>
                 <th>Loại hàng</th>
                 <th>Giá</th>
-                <th>Hạn dùng</th>
+                <th>Hạn sử dụng</th>
                 <th>Ngày sản xuất</th>
                 <th>Công ty sản xuất</th>
             </tr>
@@ -69,17 +72,15 @@
                 <tr>
                     <td>@p.ID</td>
                     <td>@p.Name</td>
-                    <td>@p.Category</td>
+                    <td>@p.Category.Name</td>
                     <td>@p.Price</td>
-                    <td>@p.ExpiryDate</td>
-                    <td>@p.ManufacturingDate</td>
+                    <td>@p.ExpiryDate.ToString("dd/MM/yyyy")</td>
+                    <td>@p.ManufacturingDate.ToString("dd/MM/yyyy")</td>
                     <td>@p.Manufacturer</td>
-                    <td>
+                    <td style="width:140px;">
                         <a asp-page="EditProduct" asp-route-id="@p.ID" class="btn btn-primary mx-2">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                    </td>
-                    <td>
                         <a asp-page="DeleteProduct" asp-route-id="@p.ID" class="btn btn-danger mx-2">
                             <i class="bi bi-trash3-fill"></i>
                         </a>
