@@ -3,12 +3,12 @@
     public struct ProductRecord
     {
         public int ID;
-        public Product Product;
+        public int ProductID;
         public int ProductCount;
-        public ProductRecord(int id, Product product, int productCount)
+        public ProductRecord(int id, int productID, int productCount)
         {
             ID = id;
-            Product = product;
+            ProductID = productID;
             ProductCount = productCount;  
         }
     }

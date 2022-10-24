@@ -20,6 +20,10 @@ namespace StoreManagement.Pages.Product
         [BindProperty]
         public string Manufacturer { get; set; }
 
+        public bool IsNotiActive = false;
+        
+        public string[] Notifications = new string[1];
+
         public void OnGet()
         {
             Categories = CategoryBL.ReadData();
@@ -27,13 +31,27 @@ namespace StoreManagement.Pages.Product
 
         public void OnPost()
         {
-            var category = CategoryBL.FindByID(CategoryID);
-            DateTime expiryDate = DateTime.Parse(str_ExpiryDate);
-            DateTime manufacturingDate = DateTime.Parse(str_ManufacturingDate);
+            OnGet();
+            bool isInputValid = ProductBL.IsValidAndReturnNoti(
+                Name, 
+                CategoryID, 
+                Manufacturer,
+                str_ExpiryDate,
+                str_ManufacturingDate,
+                Price,
+                out Notifications
+                );
 
-            Entities.Product product = new Entities.Product(0, Name, Price, category, expiryDate, manufacturingDate, Manufacturer);
-            var addRes = ProductBL.Add(product);
-            Response.Redirect("/Products/Index");
+            if(isInputValid)
+            {
+                DateTime expiryDate = DateTime.Parse(str_ExpiryDate);
+                DateTime manufacturingDate = DateTime.Parse(str_ManufacturingDate);
+
+                Entities.Product product = new Entities.Product(0, Name, Price, CategoryID, expiryDate, manufacturingDate, Manufacturer);
+                var addRes = ProductBL.Add(product);
+                Response.Redirect("/Products/Index");
+            }      
+            IsNotiActive = true;
         }
     }
 }

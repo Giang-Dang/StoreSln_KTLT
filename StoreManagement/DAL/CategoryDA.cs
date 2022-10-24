@@ -46,7 +46,7 @@ namespace StoreManagement.DAL
             {
                 using (StreamReader sr = new StreamReader(_dataFilePath))
                 {
-                    jsonData = sr.ReadLine();
+                    jsonData = sr.ReadLine() ?? "";
                 }
                 res = JsonConvert.DeserializeObject<List<Category>>(jsonData);
             }                
@@ -70,10 +70,10 @@ namespace StoreManagement.DAL
             var queryProducts = ProductDA.ReadData();
             for (int i = 0; i < queryProducts.Count; i++)
             {
-                if (queryProducts[i].Category.ID == category.ID)
+                if (queryProducts[i].CategoryID == category.ID)
                 {
                     var tempProduct = queryProducts[i];
-                    tempProduct.Category = category;
+                    tempProduct.CategoryID = category.ID;
                     queryProducts[i] = tempProduct;
                 }    
             }

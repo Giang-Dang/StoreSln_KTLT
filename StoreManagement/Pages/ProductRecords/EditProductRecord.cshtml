@@ -1,5 +1,5 @@
 ﻿@page
-@model StoreManagement.Pages.ProductRecords.AddProductRecordModel
+@model StoreManagement.Pages.ProductRecords.EditProductRecordModel
 
 <form method="post">
     <div class="border p-3 mt-4">
@@ -7,20 +7,6 @@
             <h2 class="text-primary pl-3">@Model.Title</h2>
             <hr />
         </div>
-        @if (Model.IsNotiActive)
-        {
-            <div class="mb-3 border">
-                <ul>
-                    @foreach (var noti in Model.Notifications)
-                    {
-                        if (noti != null)
-                        {
-                            <li class="text-danger">@noti</li>
-                        }
-                    }
-                </ul>
-            </div>
-        }
         <div class="mb-3">
             <label for="Manufacturer" style="width:180px;">Mã hóa đơn: </label>
             <input disabled class="mw-50" style="width:210px;" type="text" name="ID" value="@Model.ID">
@@ -39,7 +25,7 @@
             <input class="mw-50" style="width:210px;" type="text" name="ProductCount">
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px;">Thêm</button>
-        <a href="@Model.PreviousPageAddress" class="btn btn-secondary">Trở về trang trước</a>
+        <a asp-page="./Invoices/AddInvoice" asp-route-id="@Model.ID" asp- class="btn btn-secondary">Trở về trang Nhập hóa đơn</a>
     </div>
 </form>
 

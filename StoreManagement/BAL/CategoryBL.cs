@@ -29,7 +29,7 @@ namespace StoreManagement.BAL
         public static List<Category> FindByStringInName(string sname)
         {
             var categories = ReadData();
-            return categories.Where(c => c.Name.Contains(sname)).ToList();
+            return categories.Where(c => c.Name.Contains(sname ?? "")).ToList();
         }
 
         public static bool Edit(Category category)
@@ -37,17 +37,23 @@ namespace StoreManagement.BAL
             return CategoryDA.Edit(category);
         }
 
-        public static string Delete(Category category)
+        public static bool Delete(Category category)
         {
-            if(ProductBL.AnyProductInCategory(category))
+            return CategoryDA.Delete(category);
+        }
+
+        public static bool IsInputValidAndReturnNoti(string name, out string[] notifications)
+        {
+            var res = true;
+            notifications = new string[1];
+            
+            if(name == null)
             {
-                return "Xóa thất bại. Do có mặt hàng thuộc loại hàng này.";
+                notifications[0] = "Tên loại hàng không được để trống.";
+                res = false;
             }
-            if(CategoryDA.Delete(category))
-            {
-                return "Xóa loại hàng thành công.";
-            }
-            return "Xóa thất bại. Không rõ lỗi";
+
+            return res;
         }
     }
 }

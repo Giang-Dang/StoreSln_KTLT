@@ -62,7 +62,7 @@ namespace StoreManagement.DAL
         }
 
 
-        public static bool Delete(Product product)
+        public static bool Remove(Product product)
         {
             var products = ReadData();
             products.Remove(product);

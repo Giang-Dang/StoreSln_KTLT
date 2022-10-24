@@ -14,10 +14,10 @@ namespace StoreManagement.BAL
             var products = ReadData();
             return products.FirstOrDefault(p => p.ID == id);
         }
-        public static bool AnyProductInCategory(Category category)
+        public static bool AnyProductInCategory(int categoryID)
         {
             var products = ReadData();
-            return products.Any(p => p.Category.Equals(category));
+            return products.Any(p => p.CategoryID == categoryID);
         }
         public static List<Product> ReadData()
         {
@@ -28,9 +28,9 @@ namespace StoreManagement.BAL
         {
             return ProductDA.Add(product);
         }
-        public static string Delete(Product product)
+        public static string Remove(Product product)
         {
-            if (ProductDA.Delete(product))
+            if (ProductDA.Remove(product))
             {
                 return "Xóa loại hàng thành công.";
             }
@@ -40,6 +40,63 @@ namespace StoreManagement.BAL
         public static bool Edit(Product product)
         {
             return ProductDA.Edit(product);
+        }
+
+        public static bool IsValidAndReturnNoti(
+            string name,
+            int categoryID,
+            string manufacturer,
+            string str_ExpiryDate,
+            string str_ManufacturingDate,
+            decimal price, out string[] notifications)
+        {
+            notifications = new string[7];
+            bool res = true;
+
+            if (name == null)
+            {
+                notifications[0] = "Tên mặt hàng không được để trống và phải bắt đầu bằng một chữ cái.";
+                res = false;
+            }
+
+            if(categoryID <= 0)
+            {
+                notifications[1] = "Loại hàng không được trống.";
+                res = false;
+            }
+
+            if (manufacturer == null)
+            {
+                notifications[2] = "Tên nhà sản xuất không được để trống và phải bắt đầu bằng một chữ cái.";
+                res = false;
+            }
+
+            DateTime expiryDate;
+            if(!DateTime.TryParseExact(str_ExpiryDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out expiryDate))
+            {
+                notifications[3] = "Hạn sử dụng không được để trống hoặc nhập sai định dạng.";
+                res = false;
+            }
+
+            DateTime manufacturingDate;
+            if (!DateTime.TryParseExact(str_ManufacturingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out manufacturingDate))
+            {
+                notifications[4] = "Ngày sản xuất không được để trống hoặc nhập sai định dạng.";
+                res = false;
+            }
+
+            if(manufacturingDate >= expiryDate)
+            {
+                notifications[5] = "Hạn sử dụng phải sau ngày sản xuất.";
+                res = false;
+            }    
+
+            if(price <= 0)
+            {
+                notifications[6] = "Giá phải có giá trị lớn hơn 0.";
+                res = false;
+            }    
+            return res;
         }
 
         public static List<Product> Filter(
@@ -65,7 +122,7 @@ namespace StoreManagement.BAL
                 int categoryID = -1;
                 if(Int32.TryParse(str_CategoryID, out categoryID))
                 {
-                    queryProducts = queryProducts.Where(p => p.Category.ID == categoryID).ToList();
+                    queryProducts = queryProducts.Where(p => p.CategoryID == categoryID).ToList();
                 }    
             }
 
@@ -129,6 +186,11 @@ namespace StoreManagement.BAL
             }
 
             return queryProducts;
+        }
+
+        public static bool CanDelete(int productID)
+        {
+            return !InvoiceBL.AnyProductMatchID(productID) && !ReceiptBL.AnyProductMatchID(productID);
         }
     }
 }

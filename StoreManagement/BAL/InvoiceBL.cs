@@ -1,5 +1,6 @@
 ﻿using StoreManagement.DAL;
 using StoreManagement.Entities;
+using System.Net.WebSockets;
 
 namespace StoreManagement.BAL
 {
@@ -17,7 +18,7 @@ namespace StoreManagement.BAL
             int res = 1;
             if(invoices.Any())
             {
-                res = invoices.Max(i => i.ID);
+                res = invoices.Max(i => i.ID) + 1;
             }
             return res;
         }
@@ -28,7 +29,6 @@ namespace StoreManagement.BAL
             var invoices = InvoiceDA.ReadData();
 
             var invoice = invoices.FirstOrDefault(i => i.ID == invoiceID);
-            var product = products.FirstOrDefault(i => i.ID == productID);
 
             int recordID = 1;
             if(invoice.ProductRecords == null)
@@ -37,9 +37,9 @@ namespace StoreManagement.BAL
             }    
             if (invoice.ProductRecords.Any())
             {
-                recordID = invoice.ProductRecords.Max(r => r.ID);
+                recordID = invoice.ProductRecords.Max(r => r.ID) + 1;
             }
-            ProductRecord record = new ProductRecord(recordID, product, productCount);
+            ProductRecord record = new ProductRecord(recordID, productID, productCount);
             invoice.ProductRecords.Add(record);
 
             InvoiceDA.Edit(invoice);
@@ -53,5 +53,43 @@ namespace StoreManagement.BAL
             return InvoiceDA.Add(invoice);
         }
 
+        public static bool Edit(int id, DateTime creationDateTime, List<ProductRecord> productRecords)
+        {
+            var invoice = new Invoice(id, creationDateTime, productRecords);
+            return InvoiceDA.Edit(invoice);
+        }
+
+        public static bool RemoveAtID(int id)
+        {
+            return InvoiceDA.RemoveAtID(id);
+        }
+        public static bool AnyMatchID(int id)
+        {
+            var invoices = InvoiceDA.ReadData();
+            return invoices.Any(i => i.ID == id);
+        }
+
+        public static Invoice FindByID(int id)
+        {
+            var invoices = InvoiceDA.ReadData();
+            return invoices.SingleOrDefault(i => i.ID == id);
+        }
+
+        public static bool AnyProductMatchID(int productID)
+        {
+            var invoices = ReadData();
+            var res = false;
+            foreach(var invoice in invoices)
+            {
+                foreach(var productRecord in invoice.ProductRecords)
+                {
+                    if(productRecord.ProductID == productID)
+                    {
+                        res = true;
+                    }    
+                }    
+            }
+            return res;
+        }
     }
 }

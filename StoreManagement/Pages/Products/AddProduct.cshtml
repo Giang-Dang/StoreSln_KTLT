@@ -6,35 +6,55 @@
             <h2 class="text-primary pl-3">Thêm mặt hàng</h2>
             <hr />
         </div>
-        <div class="mb-3">
+        @if (Model.IsNotiActive)
+        {
+            <div class="mb-3 border">
+                <ul class="text-danger">
+                    @foreach (var noti in Model.Notifications)
+                    {
+                        if (noti != null)
+                        {
+                            <li>
+                                <span>@noti</span>
+                            </li>
+
+                        }
+                }
+            </ul>
+        </div>
+        }
+        <div class="mb-3 border-bottom">
             <label for="name" style="width:180px;">Tên</label>
             <input class="mw-50" style="width:210px;" type="text" name="name">
+            
         </div>
-        <div class="mb-3">
+        <div class="mb-3 border-bottom">
             <label for="Category" style="width:180px;">Loại Hàng</label>
-            <select class="mw-50" style="width:210px;" name="CategoryID">
+            <select class="mw-50" style="width:210px;" name="CategoryID" value="-1">
                 @foreach (var c in Model.Categories)
                 {
                     <option value="@c.ID">@c.Name</option>
                 }
             </select>
         </div>
-        <div class="mb-3">
-            <label for="Price" style="width:180px;">Giá</label>
-            <input class="mw-50" style="width:210px;" type="text" name="Price">
-        </div>
-        <div class="mb-3">
-            <label for="ExpiryDate"style="width:180px;">Hạn Dùng</label>
-            <input class="mw-50" style="width:210px;" type="date" name="str_ExpiryDate">
-        </div>
-        <div class="mb-3">
-            <label for="ManufacturingDate"style="width:180px;">Ngày sản xuất</label>
-            <input class="mw-50" style="width:210px;" type="date" name="str_ManufacturingDate">
-        </div>
-        <div class="mb-3">
+        <div class="mb-3 border-bottom">
             <label for="Manufacturer" style="width:180px;">Công ty sản xuất</label>
             <input class="mw-50" style="width:210px;" type="text" name="Manufacturer">
         </div>
+        <div class="mb-3 border-bottom">
+            <label for="ManufacturingDate" style="width:180px;">Ngày sản xuất</label>
+            <input class="mw-50" style="width:210px;" type="date" name="str_ManufacturingDate">
+        </div>
+        
+        <div class="mb-3 border-bottom">
+            <label for="ExpiryDate"style="width:180px;">Hạn Dùng</label>
+            <input class="mw-50" style="width:210px;" type="date" name="str_ExpiryDate">
+        </div>
+        <div class="mb-3 border-bottom">
+            <label for="Price" style="width:180px;">Giá</label>
+            <input class="mw-50" style="width:210px;" type="number" min="0" step="any" name="Price">
+        </div>
+        
         <button type="submit" class="btn btn-primary" style="width:150px;">Thêm</button>
         <a asp-page="Index" class="btn btn-secondary">Trở về danh sách mặt hàng</a>
     </div>

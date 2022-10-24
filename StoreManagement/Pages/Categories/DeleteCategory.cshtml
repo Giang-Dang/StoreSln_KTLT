@@ -4,9 +4,23 @@
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary pl-3">Sửa loại hàng</h2>
+            <h2 class="text-primary pl-3">Xóa loại hàng</h2>
             <hr />
         </div>
+        @if (Model.IsNotiActive)
+        {
+            <div class="mb-3 border">
+                <ul>
+                    @foreach (var noti in Model.Notifications)
+                    {
+                        if (noti != null)
+                        {
+                            <li class="text-danger">@noti</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
         <div class="mb-3">
             <label for="ID" style="width:180px;">Mã loại hàng (tự động): </label>
             <input disabled class="w-50" type="text" name="ID" value="@Model.Category.ID">

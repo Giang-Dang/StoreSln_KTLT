@@ -16,7 +16,7 @@
         </div>
         <div class="mb-3">
             <label for="Category" style="width:180px;">Loại Hàng</label>
-            <select class="mw-50" style="width:210px;" name="CategoryID" value="@Model.Product.Category.ID">
+            <select class="mw-50" style="width:210px;" name="CategoryID" value="@Model.Category.ID">
                 @foreach (var c in Model.Categories)
                 {
                     <option value="@c.ID">@c.Name</option>

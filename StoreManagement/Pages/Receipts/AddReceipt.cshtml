@@ -1,4 +1,58 @@
 ﻿@page
 @model StoreManagement.Pages.Receipt.AddReceiptModel
-@{
-}
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3">Thêm hóa đơn bán hàng</h2>
+            <hr />
+        </div>
+        <div>
+            <input hidden asp-for="ID" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label mx-3" for="Name" style="width:180px;">Ngày giờ tạo (tự động): </label>
+            <input disabled class="" type="text" name="str_CreationDateTime" style="width:210px;" value="@Model.str_CreationDateTime">
+        </div> 
+
+        <div class="mb-3">
+            <table class="table table-bordered table-striped" width="100%">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên mặt hàng</th>
+                    <th>Loại hàng</th>
+                    <th>Hạn sử dụng</th>
+                    <th>Ngày sản xuất</th>
+                    <th>Công ty sản xuất</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th> </th>
+                </tr>
+
+                @for (int i = 0; i < Model.ProductRecords.Count; i++)
+                {
+                    var product = Model.Products.FirstOrDefault(p => p.ID == Model.ProductRecords[i].ID);
+                    var category = Model.Categories.FirstOrDefault(p => p.ID == product.CategoryID);
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@product.Name</td>
+                        <td>@category.Name</td>
+                        <td>@product.ExpiryDate.ToShortDateString()</td>
+                        <td>@product.ManufacturingDate.ToShortDateString()</td>
+                        <td>@product.Manufacturer</td>
+                        <td>@product.Price</td>
+                        <td>@Model.ProductRecords[i].ProductCount</td>
+                        <td style="width:110px;">
+                            <a asp-page="..\ProductRecords\DeleteProductRecord" asp-route-action="Add" asp-route-type="Receipt" asp-route-id="@Model.ID" asp-route-recordid="@Model.ProductRecords[i].ID" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash3-fill"></i> Xóa
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <a asp-page="../ProductRecords/AddProductRecord" asp-route-type="Receipt" asp-route-action="Add" asp-route-id="@Model.ID" class="btn btn-primary"><i class="bi bi-plus-square"></i> Thêm mặt hàng mới</a>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary" style="width:150px;">Thêm</button>
+        <a asp-page="Index" class="btn btn-secondary">Trở về danh sách loại hàng</a>
+    </div>
+</form>

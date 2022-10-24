@@ -7,6 +7,20 @@
             <h2 class="text-primary pl-3">Thêm loại hàng</h2>
             <hr/>
         </div>
+        @if (Model.IsNotiActive)
+        {
+            <div class="mb-3 border">
+                <ul>
+                    @foreach (var noti in Model.Notifications)
+                    {
+                        if (noti != null)
+                        {
+                            <li class="text-danger">@noti</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
         <div class="mb-3">
             <label class="form-label mx-3" for="Name" style="width:180px;">Tên loại hàng: </label>
             <input class="w-50" type="text" name="name">

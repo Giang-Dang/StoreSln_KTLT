@@ -23,6 +23,7 @@
             <tr>
                 <th>Mã loại hàng</th>
                 <th>Tên loại hàng</th>
+                <th> </th>
             </tr>
 
             @foreach (var c in Model.Categories)
@@ -30,12 +31,12 @@
                 <tr>
                     <td>@c.ID</td>
                     <td>@c.Name</td>
-                    <td style="width:140px;">
+                    <td style="width:200px;">
                         <a asp-page="EditCategory" asp-route-id="@c.ID" class="btn btn-primary mx-2">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square"></i> Sửa
                         </a>
                         <a asp-page="DeleteCategory" asp-route-id="@c.ID" class="btn btn-danger mx-2">
-                            <i class="bi bi-trash3-fill"></i>
+                            <i class="bi bi-trash3-fill"></i> Xóa
                         </a>
                     </td>
                 </tr>

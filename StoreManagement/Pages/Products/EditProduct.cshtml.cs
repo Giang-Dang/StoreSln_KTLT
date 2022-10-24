@@ -22,16 +22,19 @@ namespace StoreManagement.Pages.Product
         public string str_ManufacturingDate { get; set; }
 
         public Entities.Product Product;
+        public Entities.Category Category;
         public List<Entities.Category> Categories = new List<Entities.Category>();
         public void OnGet()
         {
             Product = ProductBL.FindByID(ID);
+            Category = CategoryBL.FindByID(Product.CategoryID);
             Categories = CategoryBL.ReadData();
         }
 
         public void OnPost()
         {
             Product = ProductBL.FindByID(ID);
+            Category = CategoryBL.FindByID(Product.CategoryID);
 
             DateTime expiryDate;
             if(!DateTime.TryParse(str_ExpiryDate, out expiryDate))
@@ -45,9 +48,8 @@ namespace StoreManagement.Pages.Product
                 manufacturingDate = Product.ManufacturingDate;
             }
 
-            Entities.Category category = CategoryBL.FindByID(CategoryID);
 
-            Product = new Entities.Product(ID, Name, Price, category, expiryDate, manufacturingDate, Manufacturer);
+            Product = new Entities.Product(ID, Name, Price, CategoryID, expiryDate, manufacturingDate, Manufacturer);
             
             var editRes = ProductBL.Edit(Product);
             Response.Redirect("/Products");

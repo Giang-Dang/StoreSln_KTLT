@@ -1,4 +1,15 @@
 ﻿@page
 @model StoreManagement.Pages.Statistics.StatisticsModel
-@{
-}
+<div class="border">
+    <div class="m-3">
+        <h2 class="text-primary pl-3">Thống kê</h2>
+        <hr />
+    </div>
+
+    <div class="">
+        <a asp-page="../ByCategory" class="m-4 btn btn-primary">Thống kê số hàng còn lại trong kho theo thể loại</a>
+    </div>
+    <div class="">
+        <a asp-page="../ByExpiryDate" class="m-4 btn btn-primary">Thống kê số hàng cũ đã hết hạn sử dụng</a>
+    </div> 
+</div>

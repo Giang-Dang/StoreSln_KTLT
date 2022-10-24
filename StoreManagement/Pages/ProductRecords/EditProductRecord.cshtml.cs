@@ -4,34 +4,27 @@ using StoreManagement.BAL;
 
 namespace StoreManagement.Pages.ProductRecords
 {
-    public class AddProductRecordModel : PageModel
+    public class EditProductRecordModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
         public int ID { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public string Type { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string Action { get; set; }
 
         [BindProperty]
         public int ProductID { get; set; }
 
         [BindProperty]
         public int ProductCount { get; set; }
-        public bool IsNotiActive = false;
-        public string[] Notifications = new string[1];
 
-        public string PreviousPageAddress;
         public string Title;
 
         public List<Entities.Product> Products = new List<Entities.Product>();
         public void OnGet()
         {
             Products = ProductBL.ReadData();
-            PreviousPageAddress = $"../{Type}s/{Action}{Type}?id={ID}";
-            if(Type == "Invoice")
+
+            if (Type == "Invoice")
             {
                 Title = "Thêm danh mục vào hóa đơn nhập hàng";
             }
@@ -44,22 +37,17 @@ namespace StoreManagement.Pages.ProductRecords
         public void OnPost()
         {
             OnGet();
-            if (ProductRecordBL.IsInputValidAndReturnNoti(ProductID, ProductCount, out Notifications))
+            bool resAddProductRecord;
+            if (Type == "Invoice")
             {
-                if(Type == "Invoice")
-                {
-                    var resAddProductRecord = InvoiceBL.AddProductRecord(ID, ProductID, ProductCount);
-                    Response.Redirect(PreviousPageAddress);
-                }    
-                if(Type == "Receipt")
-                {
-                    var resAddProductRecord = ReceiptBL.AddProductRecord(ID, ProductID, ProductCount);
-                    Response.Redirect(PreviousPageAddress);
-                }    
+                resAddProductRecord = InvoiceBL.AddProductRecord(ID, ProductID, ProductCount);
             }
-            IsNotiActive = true;
+            if (Type == "Receipt")
+            {
+                resAddProductRecord = ReceiptBL.AddProductRecord(ID, ProductID, ProductCount);
+            }
+            
+            Response.Redirect($"../{Type}s/Add{Type}?id={ID}");
         }
-
-
     }
 }

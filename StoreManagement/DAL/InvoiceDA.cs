@@ -67,5 +67,14 @@ namespace StoreManagement.DAL
             SaveData(invoices);
             return true;
         }
+
+        public static bool RemoveAtID(int id)
+        {
+            var invoices = ReadData();
+            var index = invoices.FindIndex(c => c.ID == id);
+            invoices.RemoveAt(index);
+            SaveData(invoices);
+            return true;
+        }
     }
 }

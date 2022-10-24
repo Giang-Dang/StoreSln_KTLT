@@ -4,7 +4,7 @@
     {
         public int ID;
         public string Name;
-        public Category Category;
+        public int CategoryID;
         public decimal Price;
         public DateTime ExpiryDate;
         public DateTime ManufacturingDate;
@@ -14,7 +14,7 @@
             int id, 
             string name,
             decimal price,
-            Category category,
+            int categoryID,
             DateTime expiryDate,
             DateTime manufacturingDate,
             string manufacturer
@@ -26,7 +26,7 @@
             Price = price;
             ManufacturingDate = manufacturingDate;
             Manufacturer = manufacturer;
-            Category = category;
+            CategoryID = categoryID;
         }
     }
 }

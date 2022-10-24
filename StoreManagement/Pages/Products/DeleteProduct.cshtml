@@ -6,6 +6,20 @@
             <h2 class="text-primary pl-3">Xóa mặt hàng</h2>
             <hr />
         </div>
+        @if (Model.IsNotiActive)
+        {
+            <div class="mb-3 border">
+                <ul>
+                    @foreach (var noti in Model.Notifications)
+                    {
+                        if (noti != null)
+                        {
+                            <li class="text-danger">@noti</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
         <div class="mb-3">
             <label for="name" style="width:180px;">Mã mặt hàng</label>
             <input disabled class="mw-50" style="width:210px;" type="text" name="ID" value="@Model.Product.ID">
@@ -16,7 +30,7 @@
         </div>
         <div class="mb-3">
             <label for="Category" style="width:180px;">Loại Hàng</label>
-            <input disabled class="mw-50" style="width:210px;" type="text" name="Name" value="@Model.Product.Category.Name">
+            <input disabled class="mw-50" style="width:210px;" type="text" name="Name" value="@Model.Category.Name">
         </div>
         <div class="mb-3">
             <label for="Price" style="width:180px;">Giá</label>

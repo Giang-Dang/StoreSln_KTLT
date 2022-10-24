@@ -9,6 +9,9 @@ namespace StoreManagement.Pages.Category
     {
         [BindProperty]
         public string Name { get; set; }
+
+        public bool IsNotiActive = false;
+        public string[] Notifications = new string[1];
         public void OnGet()
         {
             Name = String.Empty;
@@ -16,8 +19,12 @@ namespace StoreManagement.Pages.Category
 
         public void OnPost()
         {
-            CategoryBL.Add(0, Name);
-            Response.Redirect("/Categories/Index");
+            if(CategoryBL.IsInputValidAndReturnNoti(Name,out Notifications))
+            {  
+                CategoryBL.Add(0, Name);
+                Response.Redirect("/Categories/Index");
+            }
+            IsNotiActive = true;
         }
     }
 }
