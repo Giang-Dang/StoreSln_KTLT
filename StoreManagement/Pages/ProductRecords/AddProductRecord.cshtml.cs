@@ -20,6 +20,7 @@ namespace StoreManagement.Pages.ProductRecords
 
         [BindProperty]
         public int ProductCount { get; set; }
+
         public bool IsNotiActive = false;
         public string[] Notifications = new string[1];
 
@@ -44,7 +45,7 @@ namespace StoreManagement.Pages.ProductRecords
         public void OnPost()
         {
             OnGet();
-            if (ProductRecordBL.IsInputValidAndReturnNoti(ProductID, ProductCount, out Notifications))
+            if (ProductRecordBL.IsInputValidAndReturnNoti(ProductID, ProductCount, Type == "Receipt", out Notifications))
             {
                 if(Type == "Invoice")
                 {

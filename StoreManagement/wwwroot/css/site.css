@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}

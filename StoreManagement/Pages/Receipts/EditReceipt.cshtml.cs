@@ -14,6 +14,8 @@ namespace StoreManagement.Pages.Receipt
         [BindProperty]
         public string str_NewCreationDateTime { get; set; }
 
+        public decimal TotalAmount = 0;
+
         public List<Entities.ProductRecord> ProductRecords = new List<Entities.ProductRecord>();
         public List<Entities.Product> Products = new List<Entities.Product>();
         public List<Entities.Category> Categories = new List<Entities.Category>();

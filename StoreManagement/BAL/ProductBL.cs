@@ -43,12 +43,12 @@ namespace StoreManagement.BAL
         }
 
         public static bool IsValidAndReturnNoti(
-            string name,
-            int categoryID,
-            string manufacturer,
-            string str_ExpiryDate,
-            string str_ManufacturingDate,
-            decimal price, out string[] notifications)
+            string? name,
+            int? categoryID,
+            string? manufacturer,
+            string? str_ExpiryDate,
+            string? str_ManufacturingDate,
+            decimal? price, out string[] notifications)
         {
             notifications = new string[7];
             bool res = true;
@@ -191,6 +191,53 @@ namespace StoreManagement.BAL
         public static bool CanDelete(int productID)
         {
             return !InvoiceBL.AnyProductMatchID(productID) && !ReceiptBL.AnyProductMatchID(productID);
+        }
+
+        public static int CountInInvoices(int productID)
+        {
+            int res = 0;
+            var invoices = InvoiceDA.ReadData();
+            foreach(var invoice in invoices)
+            {
+                foreach(var record in invoice.ProductRecords)
+                {
+                    if (record.ProductID == productID)
+                    {
+                        res += record.ProductCount;
+                    }    
+                }    
+            }
+            return res;
+        }
+        public static int CountInReceipts(int productID)
+        {
+            int res = 0;
+            var receipts = ReceiptDA.ReadData();
+            foreach (var receipt in receipts)
+            {
+                foreach (var record in receipt.ProductRecords)
+                {
+                    if (record.ProductID == productID)
+                    {
+                        res += record.ProductCount;
+                    }
+                }
+            }
+            return res;
+        }
+
+        public static List<Product> GetExpiredProducts(string str_ExpiryDate)
+        {
+            var queryProducts = ReadData();
+            DateTime expiryDate;
+            if (str_ExpiryDate != null)
+            {
+                if (DateTime.TryParseExact(str_ExpiryDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out expiryDate))
+                {
+                    queryProducts = queryProducts.Where(p => p.ExpiryDate < expiryDate).ToList();
+                }
+            }
+            return queryProducts;
         }
     }
 }

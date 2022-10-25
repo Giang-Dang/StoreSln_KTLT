@@ -7,9 +7,22 @@
     </div>
 
     <div class="">
-        <a asp-page="../ByCategory" class="m-4 btn btn-primary">Thống kê số hàng còn lại trong kho theo thể loại</a>
+        <a asp-page="ByCategory" class="m-4 btn btn-primary">Thống kê số hàng còn lại trong kho theo thể loại</a>
     </div>
-    <div class="">
-        <a asp-page="../ByExpiryDate" class="m-4 btn btn-primary">Thống kê số hàng cũ đã hết hạn sử dụng</a>
-    </div> 
+
+    <form method="post">
+        <div class="border-top p-3 mt-4">
+            <div class="mb-3">
+                <label for="ExpiryDate" style="width:300px;">Hạn sử dụng (mặc định là ngày hiện tại):</label>
+                <input disabled class="mw-50" style="width:210px;" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+            </div>
+            <div class="mb-3">
+                <label for="ExpiryDate" style="width:300px;">Chọn hạn sử dụng khác:</label>
+                <input class="mw-50" style="width:210px;" type="date" name="str_ExpiryDate">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="m-1 btn btn-primary">Thống kê số hàng cũ đã hết hạn sử dụng</button>
+            </div>
+        </div>
+    </form>
 </div>

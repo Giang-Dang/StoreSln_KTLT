@@ -5,6 +5,10 @@
         <div class="row pb-2">
             <h2 class="text-primary pl-3">Hóa đơn nhập hàng</h2>
             <hr />
+            <span class="text-danger pl-3">Một số thành phần không thể xóa nếu lượng tồn kho của sản phẩm sau khi xóa không lớn hơn hoặc bằng 0.</span>
+        </div>
+        <div class="row pb-2">
+            
         </div>
         <div class="mb-3">
             <label class="form-label mx-3" for="Name" style="width:180px;">Mã hóa đơn: </label>
@@ -30,6 +34,7 @@
                     <th>Công ty sản xuất</th>
                     <th>Giá</th>
                     <th>Số lượng</th>
+                    <th>Thành tiền</th>
                     <th> </th>
                 </tr>
 
@@ -37,6 +42,9 @@
                 {
                     var product = Model.Products.FirstOrDefault(p => p.ID == Model.ProductRecords[i].ID);
                     var category = Model.Categories.FirstOrDefault(p => p.ID == product.CategoryID);
+                    var canRecordDelete = ProductRecordBL.CanDeleteInInvoice(Model.ID, Model.ProductRecords[i].ID);
+                    var amount = product.Price * Model.ProductRecords[i].ProductCount;
+                    Model.TotalAmount += amount;
                     <tr>
                         <td>@(i+1)</td>
                         <td>@product.Name</td>
@@ -46,13 +54,28 @@
                         <td>@product.Manufacturer</td>
                         <td>@product.Price</td>
                         <td>@Model.ProductRecords[i].ProductCount</td>
+                        <td class="text-right">@amount</td>
                         <td style="width:110px;">
-                            <a asp-page="..\ProductRecords\DeleteProductRecord" asp-route-action="Edit" asp-route-type="Invoice" asp-route-id="@Model.ID" asp-route-recordid="@Model.ProductRecords[i].ID" class="btn btn-danger mx-2">
-                                <i class="bi bi-trash3-fill"></i> Xóa
-                            </a>
+                            @if(canRecordDelete)
+                            {
+                                <a asp-page="..\ProductRecords\DeleteProductRecord" asp-route-action="Edit" asp-route-type="Invoice" asp-route-id="@Model.ID" asp-route-recordid="@Model.ProductRecords[i].ID" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash3-fill"></i> Xóa
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary mx-2" disabled>
+                                    <i class="bi bi-trash3-fill"></i> Xóa
+                                </button>
+                            }
                         </td>
                     </tr>
                 }
+                <tr>
+                    <td class="text-left" colspan="8"><b>Tổng thành tiền:</b></td>
+                    <td class="text-right"><b>@Model.TotalAmount</b></td>
+                    <td> </td>
+                </tr>
             </table>
             <div class="d-flex flex-row-reverse">
                 <a asp-page="../ProductRecords/AddProductRecord" asp-route-type="Invoice" asp-route-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary"><i class="bi bi-plus-square"></i> Thêm mặt hàng mới</a>

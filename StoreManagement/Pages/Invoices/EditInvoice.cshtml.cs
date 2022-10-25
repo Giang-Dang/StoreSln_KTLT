@@ -13,6 +13,7 @@ namespace StoreManagement.Pages.Invoice
         public string str_CreationDateTime { get; set; }
         [BindProperty]
         public string str_NewCreationDateTime { get; set; }
+        public decimal TotalAmount = 0;
 
         public List<Entities.ProductRecord> ProductRecords = new List<Entities.ProductRecord>();
         public List<Entities.Product> Products = new List<Entities.Product>();
