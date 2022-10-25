@@ -8,14 +8,23 @@
     </div>
     <div class="submit-form pt-2 pb-4 border">
         <form method="post">
-            <div class="mb-3 bordered">
+            <div class="mb-3">
                 <label class="form-label mx-3" for="Name" style="width:100px;">Ngày giờ tạo: </label>
-                <input class="" type="datetime-local" name="str_MinCreatationDate" style="width:210px;"> -
-                <input class="" type="datetime-local" name="str_MaxCreatationDate" style="width:210px;">
+                <input class="" type="datetime-local" name="str_MinCreationDateTime" style="width:210px;"> -
+                <input class="" type="datetime-local" name="str_MaxCreationDateTime" style="width:210px;">
                 <button class="btn btn-primary mx-4" type="submit"><i class="bi bi-funnel-fill"></i> Tìm kiếm</button>                
             </div>
         </form>
     </div>
+    @if(Model.IsNotiActive)
+    {
+        <div class="pt-2 pb-4 border">
+            @foreach(var noti in Model.Notifications)
+            {
+                <li class="text-danger">@noti</li>
+            }
+        </div>
+    }
     <div class="pt-2 pb-4">
         <table class="table table-bordered table-striped" width="100%">
             <tr>

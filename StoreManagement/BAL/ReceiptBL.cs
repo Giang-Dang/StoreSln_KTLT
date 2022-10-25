@@ -1,5 +1,6 @@
 ﻿using StoreManagement.DAL;
 using StoreManagement.Entities;
+using System.Globalization;
 
 namespace StoreManagement.BAL
 {
@@ -88,6 +89,31 @@ namespace StoreManagement.BAL
                 }
             }
             return res;
+        }
+
+        public static List<Receipt> Filter(string str_MinCreationDateTime, string str_MaxCreationDateTime)
+        {
+            List<Receipt> queryReceipts = ReadData();
+
+            if (str_MinCreationDateTime != null)
+            {
+                DateTime minCreationDateTime;
+                if (DateTime.TryParseExact(str_MinCreationDateTime, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out minCreationDateTime))
+                {
+                    queryReceipts = queryReceipts.Where(i => i.CreationDateTime >= minCreationDateTime).ToList();
+                }
+            }
+
+            if (str_MaxCreationDateTime != null)
+            {
+                DateTime maxCreationDateTime;
+                if (DateTime.TryParseExact(str_MaxCreationDateTime, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out maxCreationDateTime))
+                {
+                    queryReceipts = queryReceipts.Where(i => i.CreationDateTime <= maxCreationDateTime).ToList();
+                }
+            }
+
+            return queryReceipts;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using StoreManagement.DAL;
 using StoreManagement.Entities;
+using System.Globalization;
 using System.Net.WebSockets;
 
 namespace StoreManagement.BAL
@@ -90,6 +91,44 @@ namespace StoreManagement.BAL
                 }    
             }
             return res;
+        }
+
+        public static List<Invoice> Filter(string str_MinCreationDateTime, string str_MaxCreationDateTime)
+        {
+            List<Invoice> queryInvoices = ReadData();
+
+            if (str_MinCreationDateTime != null)
+            {
+                DateTime minCreationDateTime;
+                if (DateTime.TryParseExact(str_MinCreationDateTime, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out minCreationDateTime))
+                {
+                    queryInvoices = queryInvoices.Where(i => i.CreationDateTime >= minCreationDateTime).ToList();
+                }
+            }
+
+            if (str_MaxCreationDateTime != null)
+            {
+                DateTime maxCreationDateTime;
+                if (DateTime.TryParseExact(str_MaxCreationDateTime, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out maxCreationDateTime))
+                {
+                    queryInvoices = queryInvoices.Where(i => i.CreationDateTime <= maxCreationDateTime).ToList();
+                }
+            }
+
+            return queryInvoices;
+        }
+
+        public static bool CanDelete(int invoiceID)
+        {
+            var invoice = FindByID(invoiceID);
+            foreach(var record in invoice.ProductRecords)
+            {
+                if(!ProductRecordBL.CanDeleteInInvoice(invoiceID, record.ID))
+                {
+                    return false;
+                }    
+            }    
+            return true;
         }
     }
 }

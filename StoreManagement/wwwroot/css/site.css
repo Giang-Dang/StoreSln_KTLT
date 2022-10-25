@@ -24,3 +24,13 @@ body {
 .text-left {
     text-align: left;
 }
+
+.div-topcenter {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.nav-item:hover {
+    background-color: #adcef0;
+}

@@ -45,7 +45,7 @@ namespace StoreManagement.Pages.Invoice
             {
                 creationDateTime = Invoice.CreationDateTime;
             }    
-            var editRes = InvoiceBL.Edit(ID, creationDateTime, ProductRecords);
+            var editRes = InvoiceBL.Edit(ID, creationDateTime, Invoice.ProductRecords);
             Response.Redirect("../Invoices");
         }
     }

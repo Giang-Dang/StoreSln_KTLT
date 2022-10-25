@@ -2,20 +2,32 @@
 @model StoreManagement.Pages.Invoices.IndexModel
 
 <div class="border p-3 mt-4">
-    <div class="pt-2 pb-4">
+    <div class="pt-2">
         <h2 class="text-primary">Hóa Đơn Nhập Hàng</h2>
         <hr />
     </div>
-    <div class="submit-form pt-2 pb-4 border">
+
+    @if (Model.IsNotiActive)
+    {
+        <div class="pb-2">
+            @foreach (var noti in Model.Notifications)
+            {
+                <li class="text-danger my-2 mx-3">@noti</li>
+            }
+        </div>
+    }
+
+    <div class="submit-form pt-2 pb-3 border">
         <form method="post">
-            <div class="mb-3 bordered">
+            <div class="my-2">
                 <label class="form-label mx-3" for="Name" style="width:100px;">Ngày giờ tạo: </label>
-                <input class="" type="datetime-local" name="str_MinCreatationDate" style="width:210px;"> -
-                <input class="" type="datetime-local" name="str_MaxCreatationDate" style="width:210px;">
+                <input class="" type="datetime-local" name="str_MinCreationDateTime" style="width:210px;"> -
+                <input class="" type="datetime-local" name="str_MaxCreationDateTime" style="width:210px;">
                 <button class="btn btn-primary mx-4" type="submit"><i class="bi bi-funnel-fill"></i> Tìm kiếm</button>                
             </div>
         </form>
     </div>
+ 
     <div class="pt-2 pb-4">
         <table class="table table-bordered table-striped" width="100%">
             <tr>
